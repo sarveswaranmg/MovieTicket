@@ -31,9 +31,6 @@ console.log("client build path", clientBuildPath);
 
 app.use(express.static(clientBuildPath));
 
-app.get("*", (req, res) => {
-  res.sendFile(path.join(clientBuildPath, "index.html"));
-});
 const apiLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 100,
@@ -46,6 +43,9 @@ app.use("/api/theatres", theatreRouter);
 app.use("/api/shows", showRouter);
 app.use("/api/bookings", bookingRoutes);
 
+app.get("*", (req, res) => {
+  res.sendFile(path.join(clientBuildPath, "index.html"));
+});
 app.listen(8082, () => {
   console.log("Server is running at port 8082");
 });
