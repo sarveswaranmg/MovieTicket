@@ -2,7 +2,7 @@ const express = require("express");
 const helmet = require("helmet");
 const app = express();
 const mongoSanitize = require("express-mongo-sanitize");
-
+const path = require("path");
 app.use(helmet());
 app.disable("x-powered-by");
 app.use(mongoSanitize());
