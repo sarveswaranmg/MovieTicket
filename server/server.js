@@ -15,10 +15,25 @@ const movieRouter = require("./routes/movieRouter");
 const theatreRouter = require("./routes/theatreRouter");
 const showRouter = require("./routes/showRoutes");
 const bookingRoutes = require("./routes/bookingRoutes");
+const cors = require("cors");
 connectDB();
 
 app.use(express.json());
+app.use(
+  cors({
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
+const clientBuildPath = path.join(__dirname, "../client/build");
+console.log("client build path", clientBuildPath);
 
+app.use(express.static(clientBuildPath));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(clientBuildPath, "index.html"));
+});
 const apiLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 100,
