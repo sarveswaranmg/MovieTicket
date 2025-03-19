@@ -51,7 +51,7 @@ app.use("/api/bookings", bookingRoutes);
 app.get("*", (req, res) => {
   res.sendFile(path.join(clientBuildPath, "index.html"));
 });
-
-app.listen(8082, () => {
-  console.log(`Server is running at port 8082`);
+const port = process.env.PORT || 8082;
+app.listen(port, () => {
+  console.log(`Server is running at port ${port}`);
 });
