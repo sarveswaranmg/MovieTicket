@@ -1,10 +1,20 @@
 const express = require("express");
-
 const helmet = require("helmet");
 const path = require("path");
 const cors = require("cors");
+const mongoSanitize = require("express-mongo-sanitize");
+const rateLimit = require("express-rate-limit");
+require("dotenv").config(); // Loads the environment variables from .env
+
+const connectDB = require("./config/db");
+const userRouter = require("./routes/userRoute");
+const movieRouter = require("./routes/movieRouter");
+const theatreRouter = require("./routes/theatreRouter");
+const showRouter = require("./routes/showRoutes");
+const bookingRoutes = require("./routes/bookingRoutes");
 
 const app = express();
+
 app.use(
   cors({
     origin: "*",
@@ -17,26 +27,14 @@ const clientBuildPath = path.join(__dirname, "../client/build");
 console.log("client build path", clientBuildPath);
 
 app.use(express.static(clientBuildPath));
-
 app.use(helmet());
-
-app.disable("x-powered-by");
 app.use(mongoSanitize());
-
-require("dotenv").config(); //loads the environment variables from .env
-const rateLimit = require("express-rate-limit");
-const connectDB = require("./config/db");
-const userRouter = require("./routes/userRoute");
-const movieRouter = require("./routes/movieRouter");
-const theatreRouter = require("./routes/theatreRouter");
-const showRouter = require("./routes/showRoutes");
-const bookingRoutes = require("./routes/bookingRoutes");
+app.disable("x-powered-by");
 
 connectDB();
 
 app.use(express.json());
 
-const mongoSanitize = require("express-mongo-sanitize");
 const apiLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 100,
