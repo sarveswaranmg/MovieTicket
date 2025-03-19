@@ -17,7 +17,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: "https://movieticket-hdcx.onrender.com",
+    origin: "*",
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
@@ -51,9 +51,7 @@ app.use("/api/bookings", bookingRoutes);
 app.get("*", (req, res) => {
   res.sendFile(path.join(clientBuildPath, "index.html"));
 });
-app.set("trust proxy", 1);
 
-const PORT = process.env.PORT || 10000;
-app.listen(PORT, () => {
+app.listen(8082, () => {
   console.log(`Server is running at port ${PORT}`);
 });
