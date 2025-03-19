@@ -52,8 +52,6 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(clientBuildPath, "index.html"));
 });
 
-const port = "https://movieticket-hdcx.onrender.com";
-
 const PORT = process.env.PORT || 8082;
 app.listen(PORT, () => {
   console.log(`Server is running at port ${PORT}`);
