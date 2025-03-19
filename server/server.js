@@ -17,7 +17,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: "*",
+    origin: "https://movieticket-hdcx.onrender.com",
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
