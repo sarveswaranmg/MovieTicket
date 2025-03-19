@@ -36,6 +36,7 @@ const apiLimiter = rateLimit({
   max: 100,
   message: "Too many requests from this IP, please try again after 15 mins",
 });
+
 app.use("/api", apiLimiter);
 app.use("/api/users", userRouter);
 app.use("/api/movies", movieRouter);
@@ -46,6 +47,7 @@ app.use("/api/bookings", bookingRoutes);
 app.get("*", (req, res) => {
   res.sendFile(path.join(clientBuildPath, "index.html"));
 });
+
 app.listen(8082, () => {
   console.log("Server is running at port 8082");
 });
