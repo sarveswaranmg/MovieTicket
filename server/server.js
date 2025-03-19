@@ -53,7 +53,7 @@ app.get("*", (req, res) => {
 });
 app.set("trust proxy", 1);
 
-const PORT = process.env.PORT || 8082;
+const PORT = process.env.PORT || 10000;
 app.listen(PORT, () => {
   console.log(`Server is running at port ${PORT}`);
 });
