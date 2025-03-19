@@ -1,9 +1,25 @@
 const express = require("express");
+
 const helmet = require("helmet");
-const app = express();
-const mongoSanitize = require("express-mongo-sanitize");
 const path = require("path");
+const cors = require("cors");
+
+const app = express();
+app.use(
+  cors({
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
+
+const clientBuildPath = path.join(__dirname, "../client/build");
+console.log("client build path", clientBuildPath);
+
+app.use(express.static(clientBuildPath));
+
 app.use(helmet());
+
 app.disable("x-powered-by");
 app.use(mongoSanitize());
 
@@ -15,22 +31,12 @@ const movieRouter = require("./routes/movieRouter");
 const theatreRouter = require("./routes/theatreRouter");
 const showRouter = require("./routes/showRoutes");
 const bookingRoutes = require("./routes/bookingRoutes");
-const cors = require("cors");
+
 connectDB();
 
 app.use(express.json());
-app.use(
-  cors({
-    origin: "*",
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  })
-);
-const clientBuildPath = path.join(__dirname, "../client/build");
-console.log("client build path", clientBuildPath);
 
-app.use(express.static(clientBuildPath));
-
+const mongoSanitize = require("express-mongo-sanitize");
 const apiLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 100,
