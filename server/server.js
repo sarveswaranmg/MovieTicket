@@ -53,6 +53,8 @@ app.get("*", (req, res) => {
 });
 
 const port = "https://movieticket-hdcx.onrender.com";
-app.listen(port, () => {
-  console.log("Server is running at port 8082");
+
+const PORT = process.env.PORT || 8082;
+app.listen(PORT, () => {
+  console.log(`Server is running at port ${PORT}`);
 });
