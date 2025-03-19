@@ -51,6 +51,7 @@ app.use("/api/bookings", bookingRoutes);
 app.get("*", (req, res) => {
   res.sendFile(path.join(clientBuildPath, "index.html"));
 });
+app.set("trust proxy", 1);
 
 const PORT = process.env.PORT || 8082;
 app.listen(PORT, () => {
